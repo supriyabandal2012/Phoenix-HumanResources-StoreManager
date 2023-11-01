@@ -1,0 +1,47 @@
+<.header>
+  Store <%= @store.id %>
+  <:subtitle>This is a store record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/stores/#{@store}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit store</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Store ID"><%= @store.store_number %></:item>
+  <:item title="Street address"><%= @store.street_adress %></:item>
+  <:item title="City"><%= @store.city %></:item>
+  <:item title="State"><%= @store.state %></:item>
+  <:item title="Zipcode"><%= @store.zipcode %></:item>
+</.list>
+
+<.header>
+  <br/>
+  Products at this store
+</.header>
+
+<.table
+  id="products"
+  rows={@products}
+  row_click={fn product -> JS.navigate(~p"/products/#{product}") end}
+>
+  <:col :let={product} label="Name"><%= product.name %></:col>
+  <:col :let={product} label="Vendor"><%= product.vendor %></:col>
+  <:col :let={product} label="Wholesale"><%= product.wholesale_price %></:col>
+  <:col :let={product} label="Retail"><%= product.retail_price %></:col>
+  <:col :let={product} label="Inventory"><%= product.inventory_count %></:col>
+</.table>
+
+<.back navigate={~p"/stores"}>Back to stores</.back>
+
+<.modal :if={@live_action == :edit} id="store-modal" show on_cancel={JS.patch(~p"/stores/#{@store}")}>
+  <.live_component
+    module={StoreManagementWeb.StoreLive.FormComponent}
+    id={@store.id}
+    title={@page_title}
+    action={@live_action}
+    store={@store}
+    patch={~p"/stores/#{@store}"}
+  />
+</.modal>

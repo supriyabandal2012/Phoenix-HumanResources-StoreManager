@@ -1,0 +1,19 @@
+<.header>
+  Employee <%= @employee.id %>
+  <:subtitle>This is a employee record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/#{@employee}/edit"}>
+      <.button>Edit employee</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Date of hire"><%= @employee.date_of_hire %></:item>
+  <:item title="Department"><%= @employee.department %></:item>
+  <:item title="ID"><%= @employee.employee_id %></:item>
+  <:item title="First name"><%= @employee.first_name %></:item>
+  <:item title="Last name"><%= @employee.last_name %></:item>
+</.list>
+
+<.back navigate={~p"/"}>Back to employees</.back>
